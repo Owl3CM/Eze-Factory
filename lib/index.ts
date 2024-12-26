@@ -4,4 +4,4 @@ export * from "./StatusKit";
 export * from "./Ui";
 export * from "./Types";
 export * from "./Beehive";
-export { ExtractId, ExtractIds } from "./Utils";
+export { ExtractId, ExtractIds, ExtractValue, ExtractValues } from "./Utils";

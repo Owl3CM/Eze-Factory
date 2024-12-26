@@ -44,6 +44,12 @@ export type FormBeeProps<HiveType> = {
     validate: INestedFormHoneySetter<HiveType>;
   }) => any;
 };
+
+export type ObserverFormBeeProps<HiveType> = {
+  hive: INestedFormHive<HiveType>;
+  Component: (props: { honey: HiveType; error?: string }) => any;
+};
+
 export type FormBeesProps<HiveType> = {
   hiveCluster: KeyValueNestedFormHive;
   Component: (props: {

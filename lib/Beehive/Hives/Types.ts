@@ -57,7 +57,8 @@ export interface IFormHive<HiveType> extends IHive<HiveType> {
   setNestedHoney: <K extends keyof HiveType>(key: K, value: HiveType[K] | ((prev: HiveType[K]) => HiveType[K]), effect?: boolean) => void;
   getNestedHoney: <K extends keyof HiveType>(key: K) => HiveType[K];
   subscribeToNestedHive: <K extends keyof HiveType>(key: K, callback: (value: HiveType[K]) => void) => void;
-  validate: (key: keyof HiveType, value: HiveType[keyof HiveType], effect?: boolean) => void;
+  // validate: (key: keyof HiveType, value: HiveType[keyof HiveType], effect?: boolean) => void;
+  validate: <K extends keyof HiveType>(key: K, value: HiveType[K], effect?: boolean) => void;
   errors: { [key: string]: string };
   getError: (key: keyof HiveType) => string;
   setError: (key: keyof HiveType, value: string) => void;
@@ -67,6 +68,7 @@ export interface IFormHive<HiveType> extends IHive<HiveType> {
   reValidate: <K extends keyof HiveType>(validateKeys?: K[]) => Promise<boolean>;
   submit: <K extends keyof HiveType>(e?: React.FormEvent<HTMLFormElement>, validateKeys?: K[]) => void;
   validateMode: FormValidateMode;
+  reset: (initialValue?: { key: keyof HiveType; value: HiveType[keyof HiveType] }) => void;
 }
 
 export interface INestedFormHive<HiveType> {
@@ -90,3 +92,7 @@ export interface INestedFormHive<HiveType> {
 export type IStoreKey = string | { storeKey: string; storage: StorageType };
 
 export type FormValidateMode = "onBlur" | "onChange" | "onSubmit";
+
+export type IFormHiveValidator<T> = {
+  [K in keyof T]?: (value: T[K]) => string | undefined;
+};
