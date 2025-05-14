@@ -25,6 +25,7 @@ export interface IWrapperProps {
   reload?: (() => void) | null;
   style?: React.CSSProperties;
   rememberScrollPosition?: boolean;
+  isScrollPositionTopHive?: IHive<boolean>;
 }
 
 export interface onPullProps {

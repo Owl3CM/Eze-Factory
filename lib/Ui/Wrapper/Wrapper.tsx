@@ -29,10 +29,41 @@ class WrapperClassComponent extends React.Component {
   }
 
   private listnToScroll(loadMore: () => void, canLoadHive?: IHive<boolean>) {
-    if (canLoadHive)
+    //@ts-ignore
+    const isScrollPositionTopHive = this.props.isScrollPositionTopHive as IHive<boolean>;
+    let lastScrollPosition = 0;
+    if (canLoadHive) {
+      if (isScrollPositionTopHive) {
+        this.container.onscroll = ({ target }: any) => {
+          // if (isScrollPositionTopHive.honey) {
+          //   if (target.scrollTop !== 0) isScrollPositionTopHive.setHoney(false);
+          // } else if (target.scrollTop === 0) isScrollPositionTopHive.setHoney(true);
+
+          //check if it up or down
+          if (isScrollPositionTopHive.honey === true) {
+            if (target.scrollTop > lastScrollPosition) isScrollPositionTopHive.setHoney(false);
+          } else if (target.scrollTop < lastScrollPosition) {
+            isScrollPositionTopHive.setHoney(true);
+          }
+          lastScrollPosition = target.scrollTop;
+
+          if (canLoadHive.honey && target.scrollHeight - target.scrollTop < target.clientHeight + 400) loadMore();
+        };
+      } else
+        this.container.onscroll = ({ target }: any) => {
+          if (canLoadHive.honey && target.scrollHeight - target.scrollTop < target.clientHeight + 400) loadMore();
+        };
+    } else if (isScrollPositionTopHive) {
       this.container.onscroll = ({ target }: any) => {
-        if (canLoadHive.honey && target.scrollHeight - target.scrollTop < target.clientHeight + 400) loadMore();
+        //check if it up or down
+        if (isScrollPositionTopHive.honey !== false) {
+          if (target.scrollTop > lastScrollPosition) isScrollPositionTopHive.setHoney(false);
+        } else if (target.scrollTop < lastScrollPosition) {
+          isScrollPositionTopHive.setHoney(true);
+        }
+        lastScrollPosition = target.scrollTop;
       };
+    }
   }
 
   componentWillUnmount() {
@@ -53,6 +84,7 @@ class WrapperClassComponent extends React.Component {
       reloaderProps,
       canLoadHive,
       rememberScrollPosition,
+      isScrollPositionTopHive,
       ...props
     } = this.props as IWrapperProps;
     const { Component, className } = this.reloaderProps;
@@ -162,6 +194,7 @@ const Wrapper = ({
   statusHive = service.statusHive,
   canLoadHive = service.canLoadHive,
   statusKit = service.statusKit,
+  isScrollPositionTopHive = service.isScrollPositionTopHive,
   className = "local-wrapper",
   rememberScrollPosition = true,
   ...props
@@ -178,6 +211,7 @@ const Wrapper = ({
         canLoadHive,
         statusKit,
         rememberScrollPosition,
+        isScrollPositionTopHive,
         ...props,
       }}
     />
@@ -197,10 +231,14 @@ const _reloaderProps = {
   pullingClass: "pulling",
   onPull: ({ diff, diffPercentage, reloader }: onPullProps) => {
     (reloader as any).style.transform = `rotate(${diffPercentage * -360}deg)`;
+    (reloader.firstChild as any).style.scale = `${0.2 + diffPercentage * 0.4}`;
   },
   Component: (
     <svg className="reloader-svg" viewBox="0 0 512 512">
-      <path d="M256,431.967c-97.03,0-175.967-78.939-175.967-175.967c0-28.668,7.013-56.655,20.156-81.677l-25.144-16.639l107.282-54.228l-7.974,119.943l-26.111-17.279c-7.203,15.517-11.041,32.51-11.041,49.879c0,65.507,53.294,118.801,118.801,118.801s118.801-53.294,118.801-118.801s-53.295-118.8-118.802-118.8V80.033c97.028,0,175.967,78.938,175.967,175.967S353.028,431.967,256,431.967z" />
+      <path
+        className="reloader-svg-path"
+        d="M256,431.967c-97.03,0-175.967-78.939-175.967-175.967c0-28.668,7.013-56.655,20.156-81.677l-25.144-16.639l107.282-54.228l-7.974,119.943l-26.111-17.279c-7.203,15.517-11.041,32.51-11.041,49.879c0,65.507,53.294,118.801,118.801,118.801s118.801-53.294,118.801-118.801s-53.295-118.8-118.802-118.8V80.033c97.028,0,175.967,78.938,175.967,175.967S353.028,431.967,256,431.967z"
+      />
     </svg>
   ),
   className: "",
