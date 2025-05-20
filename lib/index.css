@@ -35,29 +35,20 @@
   }
 
   #reloader-container {
-    /* --m-top: -100px; */
-    /* position: fixed; */
     margin-inline: auto;
     width: 100px;
     height: 100px;
     margin-top: var(--reloader-m-top);
-    left: 0;
-    right: 0;
     z-index: 399;
     pointer-events: none;
   }
 
   .reloader-svg {
-    /* box-shadow: 0px 0px 20px #a3e4cb77; */
-    /* border-radius: 100px; */
-    /* margin: 24px; */
-    /* background-color: #1f1d2b; */
-    min-width: 52px !important;
-    min-height: 52px !important;
-    max-width: 52px !important;
-    max-height: 52px !important;
+    border-radius: 100px;
+    width: 100px !important;
+    height: 100px !important;
     box-shadow: 0px 0px 10px rgba(131, 214, 225, 0.5) !important;
-    scale: 0.8;
+    scale: 0.5;
     fill: #83d6e1;
     color: #83d6e1;
   }
