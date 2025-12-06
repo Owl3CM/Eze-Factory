@@ -5,7 +5,10 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import postcss from "rollup-plugin-postcss";
 import { terser } from "rollup-plugin-terser";
-import packageJson from "./package.json" assert { type: "json" };
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const packageJson = require("./package.json");
 
 const config = {
   input: "lib/index.ts",

@@ -1,9 +1,9 @@
 import React from "react";
-import Loading from "./Loading";
-import processing from "./Processing";
-import loadingMore from "./LoadingMore";
-import Empty from "./Empty";
-import Error from "./Error";
+import Loading from "./loading";
+import processing from "./processing";
+import loadingMore from "./loadingMore";
+import Empty from "./empty";
+import Error from "./error";
 
 export const StatusKit: IStatusKit = {
   processing,

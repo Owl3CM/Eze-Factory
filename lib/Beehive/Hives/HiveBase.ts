@@ -1,12 +1,34 @@
+// Path: src/Utils/Hive/HiveBase.ts (Simplified)
 import { StorageType } from "../../Utils/Storable";
 import { CheckSimilarity, getStorable } from "./HiveUtils";
 import { IHive, IHiveBase, IStoreKey } from "./Types";
 
+// Single subscriber type that handles both cases
+type Subscriber<T> = {
+  callback: (newValue: T) => void;
+  weakRef?: WeakRef<any>; // Optional - if provided, it's a weak subscription
+};
+
 export function _getHiveBase<HiveType>(initialValue: HiveType, storeKey?: IStoreKey): IHiveBase<HiveType> {
-  const subscribers = new Set<(newValue: HiveType) => void>();
+  const subscribers = new Set<Subscriber<HiveType>>();
 
   const pollinate = async () => {
-    subscribers.forEach((callback) => callback(baseHive.honey));
+    for (const subscriber of subscribers) {
+      if (subscriber.weakRef) {
+        // Weak subscription - check if instance is still alive
+        const instance = subscriber.weakRef.deref();
+        if (instance) {
+          // Instance alive, call callback
+          subscriber.callback(baseHive.honey);
+        } else {
+          // Instance dead, remove directly
+          subscribers.delete(subscriber);
+        }
+      } else {
+        // Regular subscription - always call
+        subscriber.callback(baseHive.honey);
+      }
+    }
   };
 
   let silentSetHoney = (newValue: any) => {
@@ -25,17 +47,29 @@ export function _getHiveBase<HiveType>(initialValue: HiveType, storeKey?: IStore
     honey: initialValue,
     setHoney,
     silentSetHoney,
-    subscribe: (callback) => {
+
+    // ✅ Single subscribe method with optional instance parameter
+    subscribe: (callback, instance?: any) => {
       if (baseHive.honey !== initialValue) callback(baseHive.honey);
-      subscribers.add(callback);
+
+      const subscriber: Subscriber<HiveType> = {
+        callback,
+        weakRef: instance ? new WeakRef(instance) : undefined,
+      };
+
+      subscribers.add(subscriber);
+
       return () => {
-        subscribers.delete(callback);
+        subscribers.delete(subscriber);
       };
     },
+
     _subscribers: () => subscribers.size,
+
     reset: () => baseHive.setHoney(initialValue),
   };
 
+  // ✅ Original storage logic unchanged
   if (storeKey) {
     let storage = "memoryStorage" as StorageType;
     if (typeof storeKey === "object") {

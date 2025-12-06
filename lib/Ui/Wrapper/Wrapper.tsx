@@ -1,5 +1,5 @@
 import React from "react";
-import { IWrapperProps, ListenToPullProps, onPullProps } from "./Types";
+import { IWrapperProps, ListenToPullProps, onPullProps } from "./types";
 import { StatusBee } from "../../StatusKit";
 import { IHive } from "../../Beehive";
 
@@ -103,7 +103,7 @@ class WrapperClassComponent extends React.Component {
         {subscribeToStatus && (
           <StatusBee
             hive={statusHive}
-            service={
+            factory={
               service || {
                 statusHive,
                 statusKit,
