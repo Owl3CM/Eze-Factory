@@ -32,22 +32,3 @@
     "lib"
   ]
 }
-// {
-//   "compilerOptions": {
-//     "target": "es2016",
-//     "allowJs": true,
-//     "esModuleInterop": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "strict": true,
-//     "skipLibCheck": true,
-//     "jsx": "react",
-//     "module": "ESNext",
-//     "declaration": true,
-//     "declarationDir": "types",
-//     "moduleResolution": "node",
-//     "sourceMap": true,
-//     "outDir": "dist",
-//     "allowSyntheticDefaultImports": true,
-//     "emitDeclarationOnly": true
-//   }
-// }

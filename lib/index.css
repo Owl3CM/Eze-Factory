@@ -1,39 +1,4 @@
-@layer services-lib {
-  .local-wrapper {
-    max-width: 100%;
-    max-height: 100vh;
-    flex-direction: column;
-    transition: all 0.3s ease-in-out;
-    overflow: auto;
-    display: flex;
-    gap: var(--md);
-  }
-
-  .local-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    padding: var(--md);
-    gap: var(--md);
-  }
-
-  @media screen and (max-width: 768px) {
-    .local-grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-  }
-
-  .local-card {
-    color: var(--owl);
-    box-shadow: var(--shadow-md);
-    background-color: var(--prim);
-    border-radius: var(--xl);
-    padding: var(--md);
-  }
-
-  .hide-scroller::-webkit-scrollbar {
-    display: none;
-  }
-
+@layer eze-factory {
   #reloader-container {
     margin-inline: auto;
     width: 100px;
