@@ -1,4 +1,4 @@
-import { StatusKit } from "./StatusKit";
+import { StatusKit } from "./Ui";
 
 // export type Status = "idle" | "loading" | "processing" | "reloading" | "searching" | "error" | "noContent" | "loadingMore";
 export type Status = keyof typeof StatusKit;

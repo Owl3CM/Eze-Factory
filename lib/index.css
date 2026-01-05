@@ -1,77 +1,43 @@
-@layer services-lib {
-  .local-wrapper{
-  max-width: 100%;
-  max-height: 100vh;
-  flex-direction: column;
-  transition: all 0.3s ease-in-out;
-  overflow: auto;
-  display: flex;
-  gap: var(--md);
-}
-
-.local-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  padding: var(--md);
-  gap: var(--md);
-}
-
-@media screen and (max-width: 768px) {
-  .local-grid {grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));}
-}
-
-.local-card{
-  color: var(--owl); 
-  box-shadow: var(--shadow-md);
-  background-color: var(--prim);
-  border-radius: var(--xl);
-  padding: var(--md);
-}
-
-.hide-scroller::-webkit-scrollbar{display: none;}
-
-#reloader-container{
-  /* --m-top: -100px; */
-  /* position: fixed; */
-  width: 100px;
-  margin-inline: auto;
-  height: 100px;
-  margin-top:var(--reloader-m-top);
-  left: 0;
-  right: 0;
-  z-index: 399;
-  pointer-events: none;
-}
-
-.reloader-svg {
-  box-shadow:  0px 0px 20px #a3e4cb77;
-  border-radius: 100px;
-  margin: 24px;
-  fill: #83d6e1;
-  background-color: #1f1d2b;
-  padding: 3px;
-}
-
-.pulling{
-  transition: unset;
-}
-.reloading {
-  opacity: 1;
-  transition: all 300ms ease-out;
-  margin-top: 0 !important;
-  animation: reload 600ms linear infinite;
-}
-.disappearing{
-  transition: all 0.3s ease-in-out;
-  margin-top: var(--reloader-m-top) !important;
-  opacity: 0;
-}
-@keyframes reload {
-  0% {
-    transform: rotate(360deg);
+@layer eze-factory {
+  #reloader-container {
+    margin-inline: auto;
+    width: 100px;
+    height: 100px;
+    margin-top: var(--reloader-m-top);
+    z-index: 399;
+    pointer-events: none;
   }
-  100% {
-    transform: rotate(720deg);
+
+  .reloader-svg {
+    border-radius: 100px;
+    width: 100px !important;
+    height: 100px !important;
+    box-shadow: 0px 0px 10px rgba(131, 214, 225, 0.5) !important;
+    scale: 0.5;
+    fill: #83d6e1;
+    color: #83d6e1;
   }
-}
+
+  .pulling {
+    transition: unset;
+  }
+  .reloading {
+    opacity: 1;
+    transition: all 300ms ease-out;
+    margin-top: 0 !important;
+    animation: reload 600ms linear infinite;
+  }
+  .disappearing {
+    transition: all 0.3s ease-in-out;
+    margin-top: var(--reloader-m-top) !important;
+    opacity: 0;
+  }
+  @keyframes reload {
+    0% {
+      transform: rotate(360deg);
+    }
+    100% {
+      transform: rotate(720deg);
+    }
+  }
 }
